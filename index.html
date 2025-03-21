@@ -12,67 +12,37 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            margin: 0;
+            min-height: 100vh;
             text-align: center;
             background: url('asd.png') no-repeat center center/cover;
-            
-            overflow: hidden;
-            position: relative;
+            overflow-y: auto;
+            padding: 20px;
         }
         h1 {
             font-family: 'Dancing Script', cursive;
-            font-size: 5em;
+            font-size: 5vw;
             color: #d63384;
         }
         h2 {
             font-family: 'Dancing Script', cursive;
-            font-size: 30px;
+            font-size: 3vw;
             color: #d63384;
         }
         .gif-container img {
-            width: 300px;
+            width: 40vw;
+            max-width: 300px;
             height: auto;
             margin-top: 20px;
-        }
-        /* Estilo especial para el GIF bunny2.gif */
-        .gif-container img.transparent {
-            mix-blend-mode: multiply; /* Intenta hacer transparente el fondo */
-        }
-        .heart-button {
-            background: none;
-            border: none;
-            padding: 0;
-            cursor: pointer;
-            margin-top: 20px;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
         }
         .heart-button img {
-            width: 100px;
+            width: 15vw;
+            max-width: 100px;
             height: auto;
         }
-        .heart-text {
-            position: absolute;
-            top: 49%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 16px;
-            font-weight: bold;
-            color: white;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
-            animation: blink 1s infinite alternate;
-        }
-        @keyframes blink {
-            0% { opacity: 1; }
-            100% { opacity: 0.5; }
-        }
         .heart {
-            position: absolute;
+            position: fixed;
             color: #d63384;
-            font-size: 24px;
+            font-size: 2vw;
             bottom: 0;
             animation: fly 3s linear infinite;
         }
@@ -85,13 +55,11 @@
             flex-direction: column;
             align-items: center;
             margin-top: 15px;
+            max-width: 90vw;
         }
-        .audio-container p {
-            font-size: 1.2em;
-            font-weight: bold;
-            color: #d63384;
-            margin-bottom: 5px;
-            text-align: center;
+        .audio-container audio {
+            width: 90%;
+            max-width: 400px;
         }
     </style>
 </head>
@@ -105,6 +73,7 @@
         <img src="heart.png" alt="Te Amo">
         <span class="heart-text">Te Amo</span>
     </button>
+    
     <div class="audio-container">
         <h2>Para ti mi amor 🩷</h2>
         <audio controls>
@@ -112,6 +81,7 @@
             <source src="para_ti.mp3" type="audio/mpeg">
         </audio>
     </div>
+    
     <div class="audio-container">
         <h2>La música para ti </h2>
         <audio controls autoplay>
@@ -121,22 +91,13 @@
     </div>
 
     <script>
-        const gifs = ["bunny1.webp", "bunny1.webp","bunny3.jpg","bunny3.jpg", "bunny2.gif", "bunny2.gif", "bunny4.jpg", "bunny4.jpg"];
+        const gifs = ["bunny1.webp", "bunny2.gif", "bunny3.jpg", "bunny4.jpg"];
         let currentGifIndex = 0;
         
         function changeGif() {
             currentGifIndex = (currentGifIndex + 1) % gifs.length;
-            let gifElement = document.getElementById("gif");
-            gifElement.src = gifs[currentGifIndex];
-
-            // Si el GIF es bunny2.gif, aplica la clase para transparencia
-            if (gifs[currentGifIndex] === "bunny2.gif") {
-                gifElement.classList.add("transparent");
-            } else {
-                gifElement.classList.remove("transparent");
-            }
+            document.getElementById("gif").src = gifs[currentGifIndex];
         }
-        
         setInterval(changeGif, 4000);
         
         function generateHearts() {
@@ -145,7 +106,6 @@
                 heart.classList.add("heart");
                 heart.innerHTML = "❤️";
                 heart.style.left = Math.random() * 100 + "vw";
-                heart.style.bottom = "0";
                 heart.style.animationDuration = (Math.random() * 2 + 1) + "s";
                 document.body.appendChild(heart);
                 setTimeout(() => heart.remove(), 3000);
