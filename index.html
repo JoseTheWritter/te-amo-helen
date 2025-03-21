@@ -49,17 +49,40 @@
             height: auto;
             margin-top: 10px;
         }
-        .heart-button {
+        .button-container {
+    display: flex;
+    justify-content: center; /* Centra los botones horizontalmente */
+    align-items: center; /* Alinea los botones verticalmente */
+    gap: 20px; /* Espaciado uniforme entre los botones */
+    margin-top: 10px;
+}
+
+.button-container button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.button-container img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain; /* Mantiene la proporción de la imagen */
+}
+
+        .heart-button, .flower-button, .text-button {
             background: none;
             border: none;
             cursor: pointer;
-            margin-top: 10px;
             position: relative;
             display: flex;
             flex-direction: column;
             align-items: center;
         }
-        .heart-button img {
+        .heart-button img, .flower-button img {
             width: 80px;
             height: auto;
         }
@@ -73,10 +96,14 @@
         .audio-container audio {
             width: 100%;
         }
-        .heart {
+        .heart, .flower, .text-float, .image-float {
             position: absolute;
             font-size: 24px;
             animation: floatUp 3s linear infinite;
+        }
+        .image-float img {
+            width: 50px;
+            height: auto;
         }
         @keyframes floatUp {
             0% {
@@ -98,9 +125,18 @@
             <img id="gif" src="bunny1.webp" alt="GIF Animado">
         </div>
         
-        <button class="heart-button" onclick="generateHearts()">
-            <img src="heart.png" alt="Te Amo">
-        </button>
+        <div class="button-container">
+            <button class="heart-button" onclick="generateFloating('❤️', 'heart')">
+                <img src="heart.png" >
+            </button>
+            <button class="flower-button" onclick="generateFloatingImage('flower.png')">
+                <img src="flower.png" >
+            </button>
+            <button class="text-button" onclick="generateFloating('🩷🤍', 'text-float')">
+                <img src="29.png" >
+            </button>
+        </div>
+        
         <div class="audio-container">
             <h2>Para ti mi amor 🩷</h2>
             <audio controls>
@@ -128,16 +164,31 @@
         
         setInterval(changeGif, 4000);
         
-        function generateHearts() {
+        function generateFloating(symbol, className) {
             for (let i = 0; i < 10; i++) {
-                let heart = document.createElement("div");
-                heart.classList.add("heart");
-                heart.innerHTML = "❤️";
-                heart.style.left = Math.random() * 100 + "%";
-                heart.style.bottom = "0";
-                heart.style.animationDuration = (Math.random() * 3 + 1) + "s";
-                document.querySelector(".frame").appendChild(heart);
-                setTimeout(() => heart.remove(), 5000);
+                let element = document.createElement("div");
+                element.classList.add(className);
+                element.innerHTML = symbol;
+                element.style.left = Math.random() * 100 + "%";
+                element.style.bottom = "0";
+                element.style.animationDuration = (Math.random() * 2 + 1) + "s";
+                document.querySelector(".frame").appendChild(element);
+                setTimeout(() => element.remove(), 3000);
+            }
+        }
+
+        function generateFloatingImage(imageSrc) {
+            for (let i = 0; i < 10; i++) {
+                let element = document.createElement("div");
+                element.classList.add("image-float");
+                let img = document.createElement("img");
+                img.src = imageSrc;
+                element.appendChild(img);
+                element.style.left = Math.random() * 100 + "%";
+                element.style.bottom = "0";
+                element.style.animationDuration = (Math.random() * 2 + 1) + "s";
+                document.querySelector(".frame").appendChild(element);
+                setTimeout(() => element.remove(), 3000);
             }
         }
     </script>
