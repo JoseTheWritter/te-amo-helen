@@ -7,42 +7,69 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
         
-        body {
+        html, body {
+            height: 100%;
+            margin: 0;
+            text-align: center;
+            background: url('asd.png') no-repeat center center/cover;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
-            text-align: center;
-            background: url('asd.png') no-repeat center center/cover;
-            overflow-y: auto;
-            padding: 20px;
+            overflow: hidden;
         }
         h1 {
             font-family: 'Dancing Script', cursive;
-            font-size: 5vw;
+            font-size: 5em;
             color: #d63384;
         }
         h2 {
             font-family: 'Dancing Script', cursive;
-            font-size: 3vw;
+            font-size: 30px;
             color: #d63384;
         }
         .gif-container img {
-            width: 40vw;
-            max-width: 300px;
+            width: 300px;
             height: auto;
             margin-top: 20px;
         }
+        .gif-container img.transparent {
+            mix-blend-mode: multiply;
+        }
+        .heart-button {
+            background: none;
+            border: none;
+            padding: 0;
+            cursor: pointer;
+            margin-top: 20px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
         .heart-button img {
-            width: 15vw;
-            max-width: 100px;
+            width: 100px;
             height: auto;
         }
+        .heart-text {
+            position: absolute;
+            top: 49%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 16px;
+            font-weight: bold;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+            animation: blink 1s infinite alternate;
+        }
+        @keyframes blink {
+            0% { opacity: 1; }
+            100% { opacity: 0.5; }
+        }
         .heart {
-            position: fixed;
+            position: absolute;
             color: #d63384;
-            font-size: 2vw;
+            font-size: 24px;
             bottom: 0;
             animation: fly 3s linear infinite;
         }
@@ -55,11 +82,13 @@
             flex-direction: column;
             align-items: center;
             margin-top: 15px;
-            max-width: 90vw;
         }
-        .audio-container audio {
-            width: 90%;
-            max-width: 400px;
+        .audio-container p {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #d63384;
+            margin-bottom: 5px;
+            text-align: center;
         }
     </style>
 </head>
@@ -73,7 +102,6 @@
         <img src="heart.png" alt="Te Amo">
         <span class="heart-text">Te Amo</span>
     </button>
-    
     <div class="audio-container">
         <h2>Para ti mi amor 🩷</h2>
         <audio controls>
@@ -81,7 +109,6 @@
             <source src="para_ti.mp3" type="audio/mpeg">
         </audio>
     </div>
-    
     <div class="audio-container">
         <h2>La música para ti </h2>
         <audio controls autoplay>
@@ -91,13 +118,21 @@
     </div>
 
     <script>
-        const gifs = ["bunny1.webp", "bunny2.gif", "bunny3.jpg", "bunny4.jpg"];
+        const gifs = ["bunny1.webp", "bunny1.webp","bunny3.jpg","bunny3.jpg", "bunny2.gif", "bunny2.gif", "bunny4.jpg", "bunny4.jpg"];
         let currentGifIndex = 0;
         
         function changeGif() {
             currentGifIndex = (currentGifIndex + 1) % gifs.length;
-            document.getElementById("gif").src = gifs[currentGifIndex];
+            let gifElement = document.getElementById("gif");
+            gifElement.src = gifs[currentGifIndex];
+
+            if (gifs[currentGifIndex] === "bunny2.gif") {
+                gifElement.classList.add("transparent");
+            } else {
+                gifElement.classList.remove("transparent");
+            }
         }
+        
         setInterval(changeGif, 4000);
         
         function generateHearts() {
@@ -106,6 +141,7 @@
                 heart.classList.add("heart");
                 heart.innerHTML = "❤️";
                 heart.style.left = Math.random() * 100 + "vw";
+                heart.style.bottom = "0";
                 heart.style.animationDuration = (Math.random() * 2 + 1) + "s";
                 document.body.appendChild(heart);
                 setTimeout(() => heart.remove(), 3000);
