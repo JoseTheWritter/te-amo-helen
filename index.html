@@ -18,8 +18,10 @@
             overflow: hidden;
         }
         .frame {
-            width: 375px; /* Tamaño típico de un teléfono */
-            height: 667px;
+            width: 90vw;
+            height: 90vh;
+            max-width: 400px;
+            max-height: 750px;
             background: url('asd.png') no-repeat center center/cover;
             border-radius: 20px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
@@ -27,13 +29,15 @@
             flex-direction: column;
             align-items: center;
             padding: 20px;
-            overflow: auto;
+            overflow: hidden;
+            position: relative;
         }
         h1 {
             font-family: 'Dancing Script', cursive;
             font-size: 2.5em;
             color: #d63384;
             white-space: pre-line;
+            margin: 5px 0;
         }
         h2 {
             font-family: 'Dancing Script', cursive;
@@ -63,18 +67,33 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            width: 100%;
             margin-top: 10px;
+            width: 100%;
         }
         .audio-container audio {
             width: 100%;
+        }
+        .heart {
+            position: absolute;
+            font-size: 24px;
+            animation: floatUp 3s linear infinite;
+        }
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-90vh);
+                opacity: 0;
+            }
         }
     </style>
 </head>
 <body>
     <div class="frame">
-        <h1>🩷 Te amo 🩷
-🩷 Helen 🩷</h1>
+        <h1>🩷 Te amo 🩷</h1>
+        <h1>🩷 Helen 🩷</h1>
         <div class="gif-container">
             <img id="gif" src="bunny1.webp" alt="GIF Animado">
         </div>
@@ -114,11 +133,11 @@
                 let heart = document.createElement("div");
                 heart.classList.add("heart");
                 heart.innerHTML = "❤️";
-                heart.style.left = Math.random() * 100 + "vw";
+                heart.style.left = Math.random() * 100 + "%";
                 heart.style.bottom = "0";
-                heart.style.animationDuration = (Math.random() * 2 + 1) + "s";
-                document.body.appendChild(heart);
-                setTimeout(() => heart.remove(), 3000);
+                heart.style.animationDuration = (Math.random() * 3 + 1) + "s";
+                document.querySelector(".frame").appendChild(heart);
+                setTimeout(() => heart.remove(), 5000);
             }
         }
     </script>
